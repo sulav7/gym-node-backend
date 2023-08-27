@@ -69,13 +69,6 @@ class UserService {
     body: IUser,
     id: string
   ): Promise<[affectedCount: number, affectedRows: IUser[]]> {
-    // const checkUser = await this.getUserByEmail(body.email);
-    // if (checkUser) {
-    //   throw {
-    //     message: "email already taken",
-    //     code: 422,
-    //   };
-    // }
     const updateUser = await this._userModel.update(body, {
       where: {
         id: id,
