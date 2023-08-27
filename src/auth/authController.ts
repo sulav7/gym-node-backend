@@ -17,6 +17,40 @@ class authController {
       next(err);
     }
   }
+
+  async forgotPassword(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      const forgotPassword = await authService.forgotPassword(req.body.email);
+      return res
+        .status(200)
+        .json(success("link send", forgotPassword, res.statusCode));
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async resetPassword(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      const token = req.params.token;
+      const resetPassword = await authService.resetPassword(token, req.body);
+      return res
+        .status(200)
+        .json(
+          success("password has been reset", resetPassword, res.statusCode)
+        );
+    } catch (err) {
+      console.log(err);
+      next(err);
+    }
+  }
 }
 
 export default authController;

@@ -18,16 +18,20 @@
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.1",
+    "nodemailer": "^6.9.4",
     "nodemon": "^3.0.1",
     "pg": "^8.11.2",
     "pg-hstore": "^2.3.4",
     "sequelize": "^6.32.1",
     "sequelize-typescript": "^2.1.5",
+    "uuid-with-v6": "^2.0.0",
     "zod": "^3.22.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^9.0.2",
+    "@types/nodemailer": "^6.4.9",
+    "@types/uuid-with-v6": "^1.1.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6"
   }

@@ -15,7 +15,7 @@ const auth = (
     if (!reqToken) {
       throw {
         message: "Token not presenet",
-        code: 403,
+        code: 401,
       };
     }
     let token = tokens(reqToken);
@@ -24,7 +24,7 @@ const auth = (
       if (err) {
         throw {
           message: "Unauthorized",
-          code: 403,
+          code: 401,
         };
       }
       //@ts-ignore

@@ -34,6 +34,27 @@ class UserService {
 
     return getInfo;
   }
+  async getOneUserWithCheck(id: string, userId: string) {
+    if (id !== userId.toString()) {
+      throw {
+        code: 403,
+        message: "Unauthrozied",
+      };
+    }
+    const getInfo = await this._userModel.findByPk(id, {
+      include: {
+        model: sequelize.getRepository(Plan),
+        required: false,
+      },
+    });
+    if (!getInfo) {
+      throw {
+        code: 404,
+        messgae: "User not found",
+      };
+    }
+    return getInfo;
+  }
 
   async getUserByEmail(email: string) {
     const userEmail = await this._userModel.findOne({
@@ -81,6 +102,24 @@ class UserService {
       { planId, startDate: data.startDate, endDate },
       { where: { id: userId } }
     );
+  }
+
+  async deleteUserPlan(id: string) {
+    const user = await this.getOneUser(id);
+    if (!user.plan) {
+      throw {
+        code: 422,
+        message: "you dont have any plan",
+      };
+    }
+
+    //@ts-ignore
+    user.planId = null;
+    //@ts-ignore
+    user.startDate = null;
+    //@ts-ignore
+    user.endDate = null;
+    await user.save();
   }
 
   async deleteUser(id: string) {

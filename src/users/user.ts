@@ -17,7 +17,9 @@ export interface IUser extends Model {
   phoneNumber: string;
   email: string;
   password: string;
-  plan: IPlan;
+  plan: IPlan | null;
+  token: string;
+  resetToken: string;
 }
 
 @Table
@@ -47,6 +49,12 @@ class User extends Model implements IUser {
 
   @Column
   password: string;
+
+  @Column
+  token: string;
+
+  @Column
+  resetToken: string;
 
   @ForeignKey(() => Plan)
   @Column

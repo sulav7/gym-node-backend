@@ -46,4 +46,33 @@ const userSchema = z
     "Password and Confirm Password doesn't match"
   );
 
-export default userSchema;
+const userUpdateDetailsSchema = z.object({
+  firstName: z
+    .string({
+      required_error: "First Name is required",
+      invalid_type_error: "First Name must be a string",
+    })
+    .min(3, "First Name should be of at least 3 digit"),
+
+  lastName: z
+    .string({
+      required_error: "Last Name is required",
+      invalid_type_error: "Last Name must be a string",
+    })
+    .min(1, "Last name should be of at least 1 character"),
+
+  phoneNumber: z.string({
+    required_error: "Phone Number is required",
+    invalid_type_error: "Phone Number must be a string",
+  }),
+  email: z
+    .string({
+      required_error: "Email is required",
+      invalid_type_error: "Email must be a string",
+    })
+    .email({
+      message: "Invalid email format",
+    }),
+});
+
+export { userSchema, userUpdateDetailsSchema };

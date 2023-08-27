@@ -1,11 +1,17 @@
 import express from "express";
-import validate from "../utils/helpers/validationHelper";
-import userSchema from "../users/userValidation";
+
 import { AuthController } from ".";
-import auth from "../middleware/authMiddleware";
+import validate from "../utils/helpers/validationHelper";
+import { validateAuthentication } from "./authValidation";
 
 const authRouter = express.Router();
 
-authRouter.post("/login", AuthController.login);
+authRouter.post(
+  "/login",
+  validate(validateAuthentication),
+  AuthController.login
+);
+authRouter.post("/forgotPassword", AuthController.forgotPassword);
+authRouter.patch("/resetPassword/:token", AuthController.resetPassword);
 
 export default authRouter;

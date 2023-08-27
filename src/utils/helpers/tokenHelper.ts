@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { jwtConfig } from "../../config/jwtConfig";
+import uuid from "uuid-with-v6";
 
 const generateToken = (token: any) => {
   return jwt.sign(token, jwtConfig.accessSecret, { expiresIn: "24hr" });
@@ -14,4 +15,8 @@ export function verifyToken(token: string) {
   return jwt.verify(token, jwtConfig.accessSecret);
 }
 
-export { generateToken, tokens };
+const token = (): string => {
+  return uuid.v6();
+};
+
+export { generateToken, tokens, token };

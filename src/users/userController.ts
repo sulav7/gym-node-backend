@@ -30,8 +30,10 @@ class UserController {
   ) {
     try {
       //@ts-ignore
+      const reqId = req.id;
       const id = req.params.id;
-      const findUser = await userService.getOneUser(id);
+
+      const findUser = await userService.getOneUserWithCheck(id, reqId);
       return res.status(200).json({
         message: "user information displayed",
         statusCode: 200,
@@ -73,6 +75,7 @@ class UserController {
       console.log(id);
       const planId = req.params.planId;
       const body: IUpdatePlan = req.body;
+      console.log(body);
       const update = await userService.updateUserPlan(id, planId, body);
       return res
         .status(200)
@@ -94,6 +97,25 @@ class UserController {
       return res
         .status(200)
         .json(success("user deleted", deleteUser, res.statusCode));
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async deleteUserPlans(
+    req: express.Request,
+    res: express.Response,
+    next: express.NextFunction
+  ) {
+    try {
+      // @ts-ignore
+      const userId = req.id;
+      console.log(userId);
+
+      const deletePlan = await userService.deleteUserPlan(userId);
+      return res
+        .status(200)
+        .json(success("plan removed", deletePlan, res.statusCode));
     } catch (err) {
       next(err);
     }
